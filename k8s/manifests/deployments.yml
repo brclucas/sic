@@ -51,11 +51,11 @@ spec:
   replicas: 3
   selector:
     matchLabels:
-      app: hello-world
+      app: hello-world-alamos
   template:
     metadata:
       labels:
-        app: hello-world
+        app: hello-world-alamos
     spec:
       nodeSelector:
         kubernetes.io/hostname: docker-server-alamos
@@ -73,11 +73,11 @@ spec:
   replicas: 3
   selector:
     matchLabels:
-      app: hello-world
+      app: hello-world-ypf
   template:
     metadata:
       labels:
-        app: hello-world
+        app: hello-world-ypf
     spec:
       nodeSelector:
         kubernetes.io/hostname: docker-server-ypf
