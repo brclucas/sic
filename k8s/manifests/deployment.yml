@@ -21,7 +21,7 @@ spec:
       topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.io/hostname
-        whenUnsatisfied: DoNotSchedule
+        whenUnsatisfiable: DoNotSchedule
         labelSelector:
           matchLabels:
             app: hello-world
