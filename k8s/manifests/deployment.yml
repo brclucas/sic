@@ -4,7 +4,12 @@ metadata:
   name: hello-world
   namespace: myapp
 spec:
-  replicas: 12  # 3 pods x 4 nodos = 12 replicas
+  replicas: 12
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   selector:
     matchLabels:
       app: hello-world
@@ -14,7 +19,7 @@ spec:
         app: hello-world
     spec:
       topologySpreadConstraints:
-      - maxSkew: 0  # Fuerza distribución exactamente igual
+      - maxSkew: 0
         topologyKey: kubernetes.io/hostname
         whenUnsatisfied: DoNotSchedule
         labelSelector:
