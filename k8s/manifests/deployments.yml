@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-master
+  namespace: myapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello-world
+  template:
+    metadata:
+      labels:
+        app: hello-world
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: server-docker
+      containers:
+      - name: hello-world
+        image: strm/helloworld-http
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-axion
+  namespace: myapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello-world
+  template:
+    metadata:
+      labels:
+        app: hello-world
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: docker-server-axion
+      containers:
+      - name: hello-world
+        image: strm/helloworld-http
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-alamos
+  namespace: myapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello-world
+  template:
+    metadata:
+      labels:
+        app: hello-world
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: docker-server-alamos
+      containers:
+      - name: hello-world
+        image: strm/helloworld-http
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-ypf
+  namespace: myapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello-world
+  template:
+    metadata:
+      labels:
+        app: hello-world
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: docker-server-ypf
+      containers:
+      - name: hello-world
+        image: strm/helloworld-http
