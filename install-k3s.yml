@@ -1,0 +1,36 @@
+---
+- name: Install K3s Master
+  hosts: server1
+  become: yes
+  tasks:
+    - name: Download K3s install script
+      get_url:
+        url: https://get.k3s.io
+        dest: /tmp/k3s-install.sh
+        mode: '0755'
+
+    - name: Install K3s master
+      shell: /tmp/k3s-install.sh
+      environment:
+        INSTALL_K3S_EXEC: "--node-ip={{ ansible_host }}"
+
+    - name: Get node token
+      command: cat /var/lib/rancher/k3s/server/node-token
+      register: node_token
+
+- name: Install K3s Workers
+  hosts: server[2:4]
+  become: yes
+  tasks:
+    - name: Download K3s install script
+      get_url:
+        url: https://get.k3s.io
+        dest: /tmp/k3s-install.sh
+        mode: '0755'
+
+    - name: Install K3s agent
+      shell: /tmp/k3s-install.sh agent
+      environment:
+        K3S_URL: "https://192.168.10.57:6443"
+        K3S_TOKEN: "{{ hostvars['server1']['node_token'].stdout }}"
+        INSTALL_K3S_EXEC: "--node-ip={{ ansible_host }}"
