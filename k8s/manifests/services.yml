@@ -7,7 +7,7 @@ spec:
   type: NodePort
   ports:
   - port: 80
-    targetPort: 80
+    targetPort: 3000
     nodePort: 30080
   selector:
     app: wifi-monitor-master
@@ -22,7 +22,7 @@ spec:
   type: NodePort
   ports:
   - port: 80
-    targetPort: 80
+    targetPort: 3000
     nodePort: 30081
   selector:
     app: wifi-monitor-axion
@@ -37,7 +37,7 @@ spec:
   type: NodePort
   ports:
   - port: 80
-    targetPort: 80
+    targetPort: 3000
     nodePort: 30082
   selector:
     app: wifi-monitor-alamos
@@ -52,7 +52,7 @@ spec:
   type: NodePort
   ports:
   - port: 80
-    targetPort: 80
+    targetPort: 3000
     nodePort: 30083
   selector:
     app: wifi-monitor-ypf
