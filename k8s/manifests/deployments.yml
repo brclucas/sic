@@ -19,7 +19,7 @@ spec:
       - name: wifi-monitor
         image: brclucas/wifi-monitor:latest
         ports:
-        - containerPort: 80
+        - containerPort: 3000
 
 ---
 apiVersion: apps/v1
@@ -43,7 +43,7 @@ spec:
       - name: wifi-monitor
         image: brclucas/wifi-monitor:latest
         ports:
-        - containerPort: 80
+        - containerPort: 3000
 
 ---
 apiVersion: apps/v1
@@ -67,7 +67,7 @@ spec:
       - name: wifi-monitor
         image: brclucas/wifi-monitor:latest
         ports:
-        - containerPort: 80
+        - containerPort: 3000
 
 ---
 apiVersion: apps/v1
@@ -91,4 +91,4 @@ spec:
       - name: wifi-monitor
         image: brclucas/wifi-monitor:latest
         ports:
-        - containerPort: 80
+        - containerPort: 3000
