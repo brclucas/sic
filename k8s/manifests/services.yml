@@ -11,7 +11,7 @@ spec:
     nodePort: 30080
   selector:
     app: hello-world
-    kubernetes.io/hostname: server-docker  # Corregido
+    kubernetes.io/hostname: server-docker
 
 ---
 apiVersion: v1
