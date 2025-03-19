@@ -11,7 +11,6 @@ spec:
     nodePort: 30080
   selector:
     app: hello-world
-    kubernetes.io/hostname: server-docker
 
 ---
 apiVersion: v1
@@ -27,7 +26,6 @@ spec:
     nodePort: 30081
   selector:
     app: hello-world
-    kubernetes.io/hostname: docker-server-axion
 
 ---
 apiVersion: v1
@@ -43,7 +41,6 @@ spec:
     nodePort: 30082
   selector:
     app: hello-world
-    kubernetes.io/hostname: docker-server-alamos
 
 ---
 apiVersion: v1
@@ -59,4 +56,3 @@ spec:
     nodePort: 30083
   selector:
     app: hello-world
-    kubernetes.io/hostname: docker-server-ypf
