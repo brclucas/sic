@@ -65,7 +65,9 @@ spec:
         kubernetes.io/hostname: docker-server-alamos
       containers:
       - name: wifi-monitor
-        image: strm/helloworld-http
+        image: brclucas/wifi-monitor:latest
+        ports:
+        - containerPort: 80
 
 ---
 apiVersion: apps/v1
@@ -87,4 +89,6 @@ spec:
         kubernetes.io/hostname: docker-server-ypf
       containers:
       - name: wifi-monitor
-        image: strm/helloworld-http
+        image: brclucas/wifi-monitor:latest
+        ports:
+        - containerPort: 80
