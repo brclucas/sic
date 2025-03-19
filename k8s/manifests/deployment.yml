@@ -13,8 +13,25 @@ spec:
       labels:
         app: hello-world
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - hello-world
+              topologyKey: "kubernetes.io/hostname"
       containers:
       - name: hello-world
         image: strm/helloworld-http
+        env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
         ports:
         - containerPort: 80
