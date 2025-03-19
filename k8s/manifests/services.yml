@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-world-master
+  name: wifi-monitor-master
   namespace: myapp
 spec:
   type: NodePort
@@ -10,13 +10,13 @@ spec:
     targetPort: 80
     nodePort: 30080
   selector:
-    app: hello-world-master
+    app: wifi-monitor-master
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-world-axion
+  name: wifi-monitor-axion
   namespace: myapp
 spec:
   type: NodePort
@@ -25,13 +25,13 @@ spec:
     targetPort: 80
     nodePort: 30081
   selector:
-    app: hello-world-axion
+    app: wifi-monitor-axion
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-world-alamos
+  name: wifi-monitor-alamos
   namespace: myapp
 spec:
   type: NodePort
@@ -40,13 +40,13 @@ spec:
     targetPort: 80
     nodePort: 30082
   selector:
-    app: hello-world-alamos
+    app: wifi-monitor-alamos
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-world-ypf
+  name: wifi-monitor-ypf
   namespace: myapp
 spec:
   type: NodePort
@@ -55,4 +55,4 @@ spec:
     targetPort: 80
     nodePort: 30083
   selector:
-    app: hello-world-ypf
+    app: wifi-monitor-ypf

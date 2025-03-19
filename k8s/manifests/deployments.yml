@@ -1,86 +1,90 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-world-master
+  name: wifi-monitor-master
   namespace: myapp
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: hello-world-master
+      app: wifi-monitor-master
   template:
     metadata:
       labels:
-        app: hello-world-master
+        app: wifi-monitor-master
     spec:
       nodeSelector:
         kubernetes.io/hostname: server-docker
       containers:
-      - name: hello-world
-        image: strm/helloworld-http
+      - name: wifi-monitor
+        image: brclucas/wifi-monitor:latest
+        ports:
+        - containerPort: 80
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-world-axion
+  name: wifi-monitor-axion
   namespace: myapp
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: hello-world-axion
+      app: wifi-monitor-axion
   template:
     metadata:
       labels:
-        app: hello-world-axion
+        app: wifi-monitor-axion
     spec:
       nodeSelector:
         kubernetes.io/hostname: docker-server-axion
       containers:
-      - name: hello-world
-        image: strm/helloworld-http
+      - name: wifi-monitor
+        image: brclucas/wifi-monitor:latest
+        ports:
+        - containerPort: 80
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-world-alamos
+  name: wifi-monitor-alamos
   namespace: myapp
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: hello-world-alamos
+      app: wifi-monitor-alamos
   template:
     metadata:
       labels:
-        app: hello-world-alamos
+        app: wifi-monitor-alamos
     spec:
       nodeSelector:
         kubernetes.io/hostname: docker-server-alamos
       containers:
-      - name: hello-world
+      - name: wifi-monitor
         image: strm/helloworld-http
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-world-ypf
+  name: wifi-monitor-ypf
   namespace: myapp
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: hello-world-ypf
+      app: wifi-monitor-ypf
   template:
     metadata:
       labels:
-        app: hello-world-ypf
+        app: wifi-monitor-ypf
     spec:
       nodeSelector:
         kubernetes.io/hostname: docker-server-ypf
       containers:
-      - name: hello-world
+      - name: wifi-monitor
         image: strm/helloworld-http
