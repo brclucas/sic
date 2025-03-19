@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: nginx-proxy
+  namespace: myapp
+spec:
+  selector:
+    matchLabels:
+      app: nginx-proxy
+  template:
+    metadata:
+      labels:
+        app: nginx-proxy
+    spec:
+      hostNetwork: true
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+          hostPort: 80
+        volumeMounts:
+        - name: config
+          mountPath: /etc/nginx/conf.d
+      volumes:
+      - name: config
+        configMap:
+          name: nginx-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: myapp
+data:
+  default.conf: |
+    server {
+        listen 80;
+        server_name server-docker;
+        location / {
+            proxy_pass http://localhost:30080;
+        }
+    }
+    server {
+        listen 80;
+        server_name docker-server-axion;
+        location / {
+            proxy_pass http://localhost:30081;
+        }
+    }
+    server {
+        listen 80;
+        server_name docker-server-alamos;
+        location / {
+            proxy_pass http://localhost:30082;
+        }
+    }
+    server {
+        listen 80;
+        server_name docker-server-ypf;
+        location / {
+            proxy_pass http://localhost:30083;
+        }
+    }
