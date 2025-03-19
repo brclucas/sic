@@ -1,3 +1,5 @@
 .env
 *.retry
 .ansible
+.vscode/
+*.log
