@@ -4,11 +4,10 @@ metadata:
   name: hello-world-master
   namespace: myapp
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
   - port: 80
     targetPort: 80
-    nodePort: 30080
   selector:
     app: hello-world
     kubernetes.io/hostname: server-docker
@@ -20,11 +19,10 @@ metadata:
   name: hello-world-axion
   namespace: myapp
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
   - port: 80
     targetPort: 80
-    nodePort: 30081
   selector:
     app: hello-world
     kubernetes.io/hostname: docker-server-axion
@@ -60,17 +58,3 @@ spec:
   selector:
     app: hello-world
     kubernetes.io/hostname: docker-server-ypf
-apiVersion: v1
-kind: Service
-metadata:
-  name: hello-world-master
-  namespace: myapp
-spec:
-  type: NodePort
-  ports:
-  - port: 80
-    targetPort: 80
-    nodePort: 30080
-  selector:
-    app: hello-world
-    kubernetes.io/hostname: server-docker
