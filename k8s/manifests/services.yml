@@ -10,7 +10,7 @@ spec:
     targetPort: 80
   selector:
     app: hello-world
-    kubernetes.io/hostname: server-docker
+    kubernetes.io/hostname: docker-server
 
 ---
 apiVersion: v1
@@ -34,11 +34,10 @@ metadata:
   name: hello-world-alamos
   namespace: myapp
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
   - port: 80
     targetPort: 80
-    nodePort: 30082
   selector:
     app: hello-world
     kubernetes.io/hostname: docker-server-alamos
@@ -50,11 +49,10 @@ metadata:
   name: hello-world-ypf
   namespace: myapp
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
   - port: 80
     targetPort: 80
-    nodePort: 30083
   selector:
     app: hello-world
     kubernetes.io/hostname: docker-server-ypf
