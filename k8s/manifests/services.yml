@@ -40,7 +40,7 @@ spec:
     targetPort: 80
     nodePort: 30082
   selector:
-    app: hello-world
+    app: hello-world-alamos
 
 ---
 apiVersion: v1
@@ -55,4 +55,4 @@ spec:
     targetPort: 80
     nodePort: 30083
   selector:
-    app: hello-world
+    app: hello-world-ypf
