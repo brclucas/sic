@@ -5,11 +5,6 @@ metadata:
   namespace: myapp
 spec:
   replicas: 12
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 0
   selector:
     matchLabels:
       app: hello-world
@@ -18,20 +13,8 @@ spec:
       labels:
         app: hello-world
     spec:
-      topologySpreadConstraints:
-      - maxSkew: 1
-        topologyKey: kubernetes.io/hostname
-        whenUnsatisfiable: DoNotSchedule
-        labelSelector:
-          matchLabels:
-            app: hello-world
       containers:
       - name: hello-world
         image: strm/helloworld-http
-        env:
-        - name: NODE_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: spec.nodeName
         ports:
         - containerPort: 80
