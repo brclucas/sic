@@ -16,11 +16,19 @@ ROOT_PASSWORD: "root_password"
 SERVER1_IP: "192.168.x.x"
 # ... more servers
 
-## Configuration (Docker - Image: brclucas/wifimonitor)
-Create a `.env` file in your local servers with your server UNIFI credentials:
-```yaml
-PORT=3000
-UNIFI_USERNAME=XXX
-UNIFI_PASSWORD=XXX
-UNIFI_SITE=default
-UNIFI_URL=https://XXX:XXX.XXX.XXX:8443/api
+## Configuration in Cluster
+For security reasons, secrets must be created manually in the cluster. Required secrets:
+
+kubectl create secret generic wifi-monitor-ypf-secrets -n myapp \
+  --from-literal=PORT=3000 \
+  --from-literal=UNIFI_USERNAME=username \
+  --from-literal=UNIFI_PASSWORD=your_password \
+  --from-literal=UNIFI_SITE=default \
+  --from-literal=UNIFI_URL=https://<IP NETWORK CONTROLLER>:8443/api
+
+- wifi-monitor-master-secrets
+- wifi-monitor-axion-secrets
+- wifi-monitor-alamos-secrets
+- wifi-monitor-ypf-secrets
+
+Contact the system administrator for the proper secret values and creation procedure.

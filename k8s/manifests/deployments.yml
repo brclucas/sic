@@ -20,6 +20,9 @@ spec:
         image: brclucas/wifi-monitor:latest
         ports:
         - containerPort: 3000
+        envFrom:
+        - secretRef:
+            name: wifi-monitor-master-secrets
 
 ---
 apiVersion: apps/v1
@@ -44,6 +47,9 @@ spec:
         image: brclucas/wifi-monitor:latest
         ports:
         - containerPort: 3000
+        envFrom:
+        - secretRef:
+            name: wifi-monitor-axion-secrets
 
 ---
 apiVersion: apps/v1
@@ -68,6 +74,9 @@ spec:
         image: brclucas/wifi-monitor:latest
         ports:
         - containerPort: 3000
+        envFrom:
+        - secretRef:
+            name: wifi-monitor-alamos-secrets
 
 ---
 apiVersion: apps/v1
@@ -92,3 +101,6 @@ spec:
         image: brclucas/wifi-monitor:latest
         ports:
         - containerPort: 3000
+        envFrom:
+        - secretRef:
+            name: wifi-monitor-ypf-secrets
