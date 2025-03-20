@@ -18,6 +18,7 @@ spec:
       containers:
       - name: wifi-monitor
         image: brclucas/wifi-monitor:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
         envFrom:
