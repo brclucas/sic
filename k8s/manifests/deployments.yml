@@ -4,7 +4,7 @@ metadata:
   name: wifi-monitor-master
   namespace: myapp
 spec:
-  replicas: 3
+  replicas: 1  # Changed from 3 to 1
   selector:
     matchLabels:
       app: wifi-monitor-master
@@ -13,6 +13,7 @@ spec:
       labels:
         app: wifi-monitor-master
     spec:
+      hostNetwork: true  # Added this line
       nodeSelector:
         kubernetes.io/hostname: server-docker
       containers:
