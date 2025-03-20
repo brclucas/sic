@@ -4,7 +4,7 @@ metadata:
   name: wifi-monitor-master
   namespace: myapp
 spec:
-  replicas: 1  # Changed from 3 to 1
+  replicas: 1
   selector:
     matchLabels:
       app: wifi-monitor-master
@@ -13,7 +13,7 @@ spec:
       labels:
         app: wifi-monitor-master
     spec:
-      hostNetwork: true  # Added this line
+      hostNetwork: true
       nodeSelector:
         kubernetes.io/hostname: server-docker
       containers:
@@ -33,7 +33,7 @@ metadata:
   name: wifi-monitor-axion
   namespace: myapp
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: wifi-monitor-axion
@@ -42,11 +42,13 @@ spec:
       labels:
         app: wifi-monitor-axion
     spec:
+      hostNetwork: true
       nodeSelector:
         kubernetes.io/hostname: docker-server-axion
       containers:
       - name: wifi-monitor
         image: brclucas/wifi-monitor:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
         envFrom:
@@ -60,7 +62,7 @@ metadata:
   name: wifi-monitor-alamos
   namespace: myapp
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: wifi-monitor-alamos
@@ -69,11 +71,13 @@ spec:
       labels:
         app: wifi-monitor-alamos
     spec:
+      hostNetwork: true
       nodeSelector:
         kubernetes.io/hostname: docker-server-alamos
       containers:
       - name: wifi-monitor
         image: brclucas/wifi-monitor:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
         envFrom:
@@ -87,7 +91,7 @@ metadata:
   name: wifi-monitor-ypf
   namespace: myapp
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: wifi-monitor-ypf
@@ -96,11 +100,13 @@ spec:
       labels:
         app: wifi-monitor-ypf
     spec:
+      hostNetwork: true
       nodeSelector:
         kubernetes.io/hostname: docker-server-ypf
       containers:
       - name: wifi-monitor
         image: brclucas/wifi-monitor:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
         envFrom:
