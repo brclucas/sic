@@ -18,10 +18,10 @@ spec:
         kubernetes.io/hostname: server-docker
       containers:
       - name: wifi-monitor
-        image: brclucas/wifi-monitor:4.0
+        image: brclucas/wifi-monitor:4.0.1
         imagePullPolicy: Always
         ports:
-        - containerPort: 80
+        - containerPort: 3000
         envFrom:
         - secretRef:
             name: wifi-monitor-master-secrets
@@ -47,10 +47,10 @@ spec:
         kubernetes.io/hostname: docker-server-axion
       containers:
       - name: wifi-monitor
-        image: brclucas/wifi-monitor:4.0
+        image: brclucas/wifi-monitor:4.0.1
         imagePullPolicy: Always
         ports:
-        - containerPort: 80
+        - containerPort: 3000
         envFrom:
         - secretRef:
             name: wifi-monitor-axion-secrets
@@ -76,10 +76,10 @@ spec:
         kubernetes.io/hostname: docker-server-alamos
       containers:
       - name: wifi-monitor
-        image: brclucas/wifi-monitor:4.0
+        image: brclucas/wifi-monitor:4.0.1
         imagePullPolicy: Always
         ports:
-        - containerPort: 80
+        - containerPort: 3000
         envFrom:
         - secretRef:
             name: wifi-monitor-alamos-secrets
@@ -105,10 +105,10 @@ spec:
         kubernetes.io/hostname: docker-server-ypf
       containers:
       - name: wifi-monitor
-        image: brclucas/wifi-monitor:4.0
+        image: brclucas/wifi-monitor:4.0.1
         imagePullPolicy: Always
         ports:
-        - containerPort: 80
+        - containerPort: 3000
         envFrom:
         - secretRef:
             name: wifi-monitor-ypf-secrets
