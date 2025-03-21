@@ -7,7 +7,7 @@ spec:
   type: ClusterIP
   ports:
   - port: 80
-    targetPort: 3000
+    targetPort: 80
   selector:
     app: wifi-monitor-master
 
@@ -21,7 +21,7 @@ spec:
   type: ClusterIP
   ports:
   - port: 80
-    targetPort: 3000
+    targetPort: 80
   selector:
     app: wifi-monitor-axion
 
@@ -35,7 +35,7 @@ spec:
   type: ClusterIP
   ports:
   - port: 80
-    targetPort: 3000
+    targetPort: 80
   selector:
     app: wifi-monitor-alamos
 
@@ -49,6 +49,6 @@ spec:
   type: ClusterIP
   ports:
   - port: 80
-    targetPort: 3000
+    targetPort: 80
   selector:
     app: wifi-monitor-ypf
