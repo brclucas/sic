@@ -18,7 +18,7 @@ spec:
         kubernetes.io/hostname: server-docker
       containers:
       - name: wifi-monitor
-        image: brclucas/wifi-monitor:latest
+        image: brclucas/wifi-monitor:3.1
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
@@ -47,7 +47,7 @@ spec:
         kubernetes.io/hostname: docker-server-axion
       containers:
       - name: wifi-monitor
-        image: brclucas/wifi-monitor:3.0
+        image: brclucas/wifi-monitor:3.1
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
@@ -76,7 +76,7 @@ spec:
         kubernetes.io/hostname: docker-server-alamos
       containers:
       - name: wifi-monitor
-        image: brclucas/wifi-monitor:latest
+        image: brclucas/wifi-monitor:3.1
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
@@ -105,7 +105,7 @@ spec:
         kubernetes.io/hostname: docker-server-ypf
       containers:
       - name: wifi-monitor
-        image: brclucas/wifi-monitor:latest
+        image: brclucas/wifi-monitor:3.1
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
