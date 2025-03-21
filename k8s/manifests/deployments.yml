@@ -47,7 +47,7 @@ spec:
         kubernetes.io/hostname: docker-server-axion
       containers:
       - name: wifi-monitor
-        image: brclucas/wifi-monitor:latest
+        image: brclucas/wifi-monitor:3.0
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
