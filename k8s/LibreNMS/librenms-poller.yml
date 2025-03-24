@@ -19,8 +19,8 @@ spec:
       containers:
       - name: poller
         image: librenms/librenms:latest
-        command: ["/usr/bin/python3"]
-        args: ["/opt/librenms/poller-wrapper.py", "16"]
+        command: ["/usr/bin/supervisord"]
+        args: ["-c", "/etc/supervisor.d/poller.conf"]
         env:
         - name: DB_HOST
           value: "librenms-db-master"
@@ -92,8 +92,8 @@ spec:
       containers:
       - name: poller
         image: librenms/librenms:latest
-        command: ["/usr/bin/python3"]
-        args: ["/opt/librenms/poller-wrapper.py", "16"]
+        command: ["/usr/bin/supervisord"]
+        args: ["-c", "/etc/supervisor.d/poller.conf"]
         env:
         - name: DB_HOST
           value: "librenms-db-axion"
@@ -165,8 +165,8 @@ spec:
       containers:
       - name: poller
         image: librenms/librenms:latest
-        command: ["/usr/bin/python3"]
-        args: ["/opt/librenms/poller-wrapper.py", "16"]
+        command: ["/usr/bin/supervisord"]
+        args: ["-c", "/etc/supervisor.d/poller.conf"]
         env:
         - name: DB_HOST
           value: "librenms-db-alamos"
@@ -238,8 +238,8 @@ spec:
       containers:
       - name: poller
         image: librenms/librenms:latest
-        command: ["/usr/bin/python3"]
-        args: ["/opt/librenms/poller-wrapper.py", "16"]
+        command: ["/usr/bin/supervisord"]
+        args: ["-c", "/etc/supervisor.d/poller.conf"]
         env:
         - name: DB_HOST
           value: "librenms-db-ypf"
