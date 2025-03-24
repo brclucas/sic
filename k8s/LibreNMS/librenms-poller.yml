@@ -19,8 +19,8 @@ spec:
       containers:
       - name: poller
         image: librenms/librenms:latest
-        command: ["/usr/bin/python3"]
-        args: ["/opt/librenms/poller-wrapper.py", "16"]
+        command: ["/usr/bin/supervisord"]
+        args: ["-c", "/etc/supervisord.conf"]
         env:
         - name: DB_HOST
           value: "librenms-db-master"
@@ -43,6 +43,12 @@ spec:
           value: "16"
         - name: POLLER_NAME
           value: "master"
+        - name: DISTRIBUTED_POLLER
+          value: "1"
+        - name: DISTRIBUTED_POLLER_NAME
+          value: "master"
+        - name: DISTRIBUTED_POLLER_GROUP
+          value: "0"
         volumeMounts:
         - name: librenms-data
           mountPath: /data
@@ -72,8 +78,8 @@ spec:
       containers:
       - name: poller
         image: librenms/librenms:latest
-        command: ["/usr/bin/python3"]
-        args: ["/opt/librenms/poller-wrapper.py", "16"]
+        command: ["/usr/bin/supervisord"]
+        args: ["-c", "/etc/supervisord.conf"]
         env:
         - name: DB_HOST
           value: "librenms-db-axion"
@@ -96,6 +102,12 @@ spec:
           value: "16"
         - name: POLLER_NAME
           value: "axion"
+        - name: DISTRIBUTED_POLLER
+          value: "1"
+        - name: DISTRIBUTED_POLLER_NAME
+          value: "axion"
+        - name: DISTRIBUTED_POLLER_GROUP
+          value: "0"
         volumeMounts:
         - name: librenms-data
           mountPath: /data
@@ -125,8 +137,8 @@ spec:
       containers:
       - name: poller
         image: librenms/librenms:latest
-        command: ["/usr/bin/python3"]
-        args: ["/opt/librenms/poller-wrapper.py", "16"]
+        command: ["/usr/bin/supervisord"]
+        args: ["-c", "/etc/supervisord.conf"]
         env:
         - name: DB_HOST
           value: "librenms-db-alamos"
@@ -149,6 +161,12 @@ spec:
           value: "16"
         - name: POLLER_NAME
           value: "alamos"
+        - name: DISTRIBUTED_POLLER
+          value: "1"
+        - name: DISTRIBUTED_POLLER_NAME
+          value: "alamos"
+        - name: DISTRIBUTED_POLLER_GROUP
+          value: "0"
         volumeMounts:
         - name: librenms-data
           mountPath: /data
@@ -178,8 +196,8 @@ spec:
       containers:
       - name: poller
         image: librenms/librenms:latest
-        command: ["/usr/bin/python3"]
-        args: ["/opt/librenms/poller-wrapper.py", "16"]
+        command: ["/usr/bin/supervisord"]
+        args: ["-c", "/etc/supervisord.conf"]
         env:
         - name: DB_HOST
           value: "librenms-db-ypf"
@@ -202,6 +220,12 @@ spec:
           value: "16"
         - name: POLLER_NAME
           value: "ypf"
+        - name: DISTRIBUTED_POLLER
+          value: "1"
+        - name: DISTRIBUTED_POLLER_NAME
+          value: "ypf"
+        - name: DISTRIBUTED_POLLER_GROUP
+          value: "0"
         volumeMounts:
         - name: librenms-data
           mountPath: /data
