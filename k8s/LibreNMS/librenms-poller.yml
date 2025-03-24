@@ -1,0 +1,179 @@
+# Master Poller
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: librenms-poller-master
+  namespace: librenms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: librenms-poller-master
+  template:
+    metadata:
+      labels:
+        app: librenms-poller-master
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: server-docker
+      containers:
+      - name: poller
+        image: librenms/librenms:latest
+        command: ["/sbin/dispatcher"]
+        args: ["--group=master"]
+        env:
+        - name: DB_HOST
+          value: "librenms-db-master"
+        - name: DB_NAME
+          value: "librenms"
+        - name: DB_USER
+          value: "librenms"
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: librenms-secrets
+              key: db_password
+        - name: TZ
+          value: "America/Argentina/Buenos_Aires"
+        volumeMounts:
+        - name: librenms-data
+          mountPath: /data
+      volumes:
+      - name: librenms-data
+        persistentVolumeClaim:
+          claimName: librenms-data-claim-master
+---
+# Axion Poller
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: librenms-poller-axion
+  namespace: librenms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: librenms-poller-axion
+  template:
+    metadata:
+      labels:
+        app: librenms-poller-axion
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: docker-server-axion
+      containers:
+      - name: poller
+        image: librenms/librenms:latest
+        command: ["/sbin/dispatcher"]
+        args: ["--group=axion"]
+        env:
+        - name: DB_HOST
+          value: "librenms-db-axion"
+        - name: DB_NAME
+          value: "librenms"
+        - name: DB_USER
+          value: "librenms"
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: librenms-secrets
+              key: db_password
+        - name: TZ
+          value: "America/Argentina/Buenos_Aires"
+        volumeMounts:
+        - name: librenms-data
+          mountPath: /data
+      volumes:
+      - name: librenms-data
+        persistentVolumeClaim:
+          claimName: librenms-data-claim-axion
+---
+# Alamos Poller
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: librenms-poller-alamos
+  namespace: librenms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: librenms-poller-alamos
+  template:
+    metadata:
+      labels:
+        app: librenms-poller-alamos
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: docker-server-alamos
+      containers:
+      - name: poller
+        image: librenms/librenms:latest
+        command: ["/sbin/dispatcher"]
+        args: ["--group=alamos"]
+        env:
+        - name: DB_HOST
+          value: "librenms-db-alamos"
+        - name: DB_NAME
+          value: "librenms"
+        - name: DB_USER
+          value: "librenms"
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: librenms-secrets
+              key: db_password
+        - name: TZ
+          value: "America/Argentina/Buenos_Aires"
+        volumeMounts:
+        - name: librenms-data
+          mountPath: /data
+      volumes:
+      - name: librenms-data
+        persistentVolumeClaim:
+          claimName: librenms-data-claim-alamos
+---
+# YPF Poller
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: librenms-poller-ypf
+  namespace: librenms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: librenms-poller-ypf
+  template:
+    metadata:
+      labels:
+        app: librenms-poller-ypf
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: docker-server-ypf
+      containers:
+      - name: poller
+        image: librenms/librenms:latest
+        command: ["/sbin/dispatcher"]
+        args: ["--group=ypf"]
+        env:
+        - name: DB_HOST
+          value: "librenms-db-ypf"
+        - name: DB_NAME
+          value: "librenms"
+        - name: DB_USER
+          value: "librenms"
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: librenms-secrets
+              key: db_password
+        - name: TZ
+          value: "America/Argentina/Buenos_Aires"
+        volumeMounts:
+        - name: librenms-data
+          mountPath: /data
+      volumes:
+      - name: librenms-data
+        persistentVolumeClaim:
+          claimName: librenms-data-claim-ypf

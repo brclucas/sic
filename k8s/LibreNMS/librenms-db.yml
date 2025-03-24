@@ -34,6 +34,8 @@ spec:
             secretKeyRef:
               name: librenms-secrets
               key: db_root_password
+        - name: TZ
+          value: "America/Argentina/Buenos_Aires"
         ports:
         - containerPort: 3306
         volumeMounts:
@@ -91,6 +93,8 @@ spec:
             secretKeyRef:
               name: librenms-secrets
               key: db_root_password
+        - name: TZ
+          value: "America/Argentina/Buenos_Aires"
         ports:
         - containerPort: 3306
         volumeMounts:
@@ -148,6 +152,8 @@ spec:
             secretKeyRef:
               name: librenms-secrets
               key: db_root_password
+        - name: TZ
+          value: "America/Argentina/Buenos_Aires"
         ports:
         - containerPort: 3306
         volumeMounts:
@@ -205,6 +211,8 @@ spec:
             secretKeyRef:
               name: librenms-secrets
               key: db_root_password
+        - name: TZ
+          value: "America/Argentina/Buenos_Aires"
         ports:
         - containerPort: 3306
         volumeMounts:
