@@ -341,25 +341,29 @@ spec:
         selector:
           matchLabels:
             app: librenms-poller-alamos
-      template:
-        metadata:
-          labels:
-            app: librenms-poller-alamos
-        spec:
-          nodeSelector:
-            kubernetes.io/hostname: docker-server-alamos
-      containers:
-      - name: poller
-        image: librenms/librenms:latest
-        command: ["/bin/sh", "-c"]
-        args: 
-          - |
-            cd /opt/librenms
-            php artisan migrate --force
-            while true; do
-              php artisan poller:poll -h all
-              sleep 300
-            done
+      # Para Axion, Alamos y YPF Pollers
+            template:
+              metadata:
+                labels:
+                  app: librenms-poller-alamos
+              spec:
+                nodeSelector:
+                  kubernetes.io/hostname: docker-server-alamos
+              containers:
+              - name: poller
+                image: librenms/librenms:latest
+                command: ["/bin/sh", "-c"]
+                args: 
+                  - |
+                    cd /opt/librenms
+                    php artisan migrate --force
+                    php artisan cache:clear
+                    php artisan config:cache
+                    while true; do
+                      php artisan poller:poll -h all --progress
+                      php artisan snmp:scan --progress
+                      sleep 300
+                    done
         env:
         - name: DB_HOST
           value: "librenms-db-alamos"
