@@ -16,14 +16,17 @@ spec:
     spec:
       nodeSelector:
         kubernetes.io/hostname: server-docker
+      # Master Poller
       containers:
       - name: poller
         image: librenms/librenms:latest
         command: ["/bin/sh", "-c"]
         args: 
           - |
+            cd /opt/librenms
+            php artisan migrate --force
             while true; do
-              python3 /opt/librenms/poller-wrapper.py 16 --progress
+              php artisan poller:poll -h all
               sleep 300
             done
         env:
@@ -100,8 +103,10 @@ spec:
         command: ["/bin/sh", "-c"]
         args: 
           - |
+            cd /opt/librenms
+            php artisan migrate --force
             while true; do
-              python3 /opt/librenms/poller-wrapper.py 16 --progress
+              php artisan poller:poll -h all
               sleep 300
             done
         env:
@@ -178,8 +183,10 @@ spec:
         command: ["/bin/sh", "-c"]
         args: 
           - |
+            cd /opt/librenms
+            php artisan migrate --force
             while true; do
-              python3 /opt/librenms/poller-wrapper.py 16 --progress
+              php artisan poller:poll -h all
               sleep 300
             done
         env:
@@ -256,8 +263,10 @@ spec:
         command: ["/bin/sh", "-c"]
         args: 
           - |
+            cd /opt/librenms
+            php artisan migrate --force
             while true; do
-              python3 /opt/librenms/poller-wrapper.py 16 --progress
+              php artisan poller:poll -h all
               sleep 300
             done
         env:
