@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: librenms-db
+  namespace: myapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: librenms-db
+  template:
+    metadata:
+      labels:
+        app: librenms-db
+    spec:
+      containers:
+      - name: db
+        image: mariadb:10.5
+        env:
+        - name: MYSQL_DATABASE
+          value: "librenms"
+        - name: MYSQL_USER
+          value: "librenms"
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretRef:
+              name: librenms-secrets
+              key: db_password
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretRef:
+              name: librenms-secrets
+              key: db_root_password
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: db-data
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: db-data
+        persistentVolumeClaim:
+          claimName: librenms-data-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: librenms-db
+  namespace: myapp
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: librenms-db

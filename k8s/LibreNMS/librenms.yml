@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: librenms
+  namespace: myapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: librenms
+  template:
+    metadata:
+      labels:
+        app: librenms
+    spec:
+      containers:
+      - name: librenms
+        image: librenms/librenms:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DB_HOST
+          value: "librenms-db"
+        - name: DB_NAME
+          value: "librenms"
+        - name: DB_USER
+          value: "librenms"
+        - name: DB_PASSWORD
+          valueFrom:
+            secretRef:
+              name: librenms-secrets
+              key: db_password
+        - name: TZ
+          value: "America/Argentina/Buenos_Aires"
+        volumeMounts:
+        - name: librenms-data
+          mountPath: /data
+      volumes:
+      - name: librenms-data
+        persistentVolumeClaim:
+          claimName: librenms-data-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: librenms
+  namespace: myapp
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 8000
+  selector:
+    app: librenms
