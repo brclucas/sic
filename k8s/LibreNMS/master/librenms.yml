@@ -1,28 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: librenms
+  name: librenms-master
   namespace: librenms
 spec:
-  replicas: 4  # One for each worker node
+  replicas: 1
   selector:
     matchLabels:
-      app: librenms
+      app: librenms-master
   template:
     metadata:
       labels:
-        app: librenms
+        app: librenms-master
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - librenms
-            topologyKey: "kubernetes.io/hostname"
+      nodeSelector:
+        kubernetes.io/hostname: server-docker
       containers:
       - name: librenms
         image: librenms/librenms:latest
@@ -30,7 +22,7 @@ spec:
         - containerPort: 8000
         env:
         - name: DB_HOST
-          value: "librenms-db"
+          value: "librenms-db-master"
         - name: DB_NAME
           value: "librenms"
         - name: DB_USER
@@ -48,12 +40,12 @@ spec:
       volumes:
       - name: librenms-data
         persistentVolumeClaim:
-          claimName: librenms-data-claim
+          claimName: librenms-data-claim-master
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: librenms
+  name: librenms-master
   namespace: librenms
 spec:
   type: NodePort
@@ -62,4 +54,4 @@ spec:
     targetPort: 8000
     nodePort: 30080
   selector:
-    app: librenms
+    app: librenms-master

@@ -1,18 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: librenms-db
+  name: librenms-db-ypf
   namespace: librenms
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: librenms-db
+      app: librenms-db-ypf
   template:
     metadata:
       labels:
-        app: librenms-db
+        app: librenms-db-ypf
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: docker-server-ypf
       containers:
       - name: db
         image: mariadb:10.5
@@ -39,15 +41,15 @@ spec:
       volumes:
       - name: db-data
         persistentVolumeClaim:
-          claimName: librenms-data-claim
+          claimName: librenms-data-claim-ypf
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: librenms-db
+  name: librenms-db-ypf
   namespace: librenms
 spec:
   ports:
   - port: 3306
   selector:
-    app: librenms-db
+    app: librenms-db-ypf

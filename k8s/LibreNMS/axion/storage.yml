@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: librenms-data-axion
+  namespace: librenms
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+    - ReadWriteOnce
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - docker-server-axion
+  hostPath:
+    path: /data/librenms/axion
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: librenms-data-claim-axion
+  namespace: librenms
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Gi

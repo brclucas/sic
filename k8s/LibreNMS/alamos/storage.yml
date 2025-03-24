@@ -1,20 +1,28 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: librenms-data
+  name: librenms-data-alamos
   namespace: librenms
 spec:
   capacity:
     storage: 8Gi
   accessModes:
     - ReadWriteOnce
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - docker-server-alamos
   hostPath:
-    path: /data/librenms
+    path: /data/librenms/alamos
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: librenms-data-claim
+  name: librenms-data-claim-alamos
   namespace: librenms
 spec:
   accessModes:
