@@ -192,8 +192,11 @@ spec:
           - |
             cd /opt/librenms
             php artisan migrate --force
+            php artisan cache:clear
+            php artisan config:cache
             while true; do
-              php artisan poller:poll -h all
+              php artisan poller:poll -h all --progress
+              php artisan snmp:scan --progress
               sleep 300
             done
         env:
@@ -432,63 +435,67 @@ spec:
         spec:
           nodeSelector:
             kubernetes.io/hostname: docker-server-ypf
-      containers:
-      - name: poller
-        image: librenms/librenms:latest
-        command: ["/bin/sh", "-c"]
-        args: 
-          - |
-            cd /opt/librenms
-            php artisan migrate --force
-            while true; do
-              php artisan poller:poll -h all
-              sleep 300
-            done
-        env:
-        - name: DB_HOST
-          value: "librenms-db-ypf"
-        - name: DB_NAME
-          value: "librenms"
-        - name: DB_USER
-          value: "librenms"
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: librenms-secrets
-              key: db_password
-        - name: TZ
-          value: "America/Argentina/Buenos_Aires"
-        - name: DISPATCHER_NODE_ID
-          value: "ypf"
-        - name: POLLER_ID
-          value: "4"
-        - name: POLLER_THREADS
-          value: "16"
-        - name: POLLER_NAME
-          value: "ypf"
-        - name: DISTRIBUTED_POLLER
-          value: "1"
-        - name: DISTRIBUTED_POLLER_NAME
-          value: "ypf"
-        - name: DISTRIBUTED_POLLER_GROUP
-          value: "0"
-        - name: APP_KEY
-          valueFrom:
-            secretKeyRef:
-              name: librenms-secrets
-              key: app_key
-        - name: APP_URL
-          value: "http://librenms"
-        - name: LIBRENMS_BASE
-          value: "/opt/librenms"
-        - name: NODE_ID
-          value: "4"
-        - name: POLLERS_ENABLED
-          value: "true"
-        volumeMounts:
-        - name: librenms-data
-          mountPath: /data
-      volumes:
-      - name: librenms-data
-        persistentVolumeClaim:
-          claimName: librenms-data-claim-ypf
+      # Para Axion, Alamos y YPF Pollers
+            containers:
+            - name: poller
+              image: librenms/librenms:latest
+              command: ["/bin/sh", "-c"]
+              args: 
+                - |
+                  cd /opt/librenms
+                  php artisan migrate --force
+                  php artisan cache:clear
+                  php artisan config:cache
+                  while true; do
+                    php artisan poller:poll -h all --progress
+                    php artisan snmp:scan --progress
+                    sleep 300
+                  done
+              env:
+              - name: DB_HOST
+                value: "librenms-db-ypf"
+              - name: DB_NAME
+                value: "librenms"
+              - name: DB_USER
+                value: "librenms"
+              - name: DB_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: librenms-secrets
+                    key: db_password
+              - name: TZ
+                value: "America/Argentina/Buenos_Aires"
+              - name: DISPATCHER_NODE_ID
+                value: "ypf"
+              - name: POLLER_ID
+                value: "4"
+              - name: POLLER_THREADS
+                value: "16"
+              - name: POLLER_NAME
+                value: "ypf"
+              - name: DISTRIBUTED_POLLER
+                value: "1"
+              - name: DISTRIBUTED_POLLER_NAME
+                value: "ypf"
+              - name: DISTRIBUTED_POLLER_GROUP
+                value: "0"
+              - name: APP_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: librenms-secrets
+                    key: app_key
+              - name: APP_URL
+                value: "http://librenms"
+              - name: LIBRENMS_BASE
+                value: "/opt/librenms"
+              - name: NODE_ID
+                value: "4"
+              - name: POLLERS_ENABLED
+                value: "true"
+              volumeMounts:
+                - name: librenms-data
+                  mountPath: /data
+            volumes:
+              - name: librenms-data
+                persistentVolumeClaim:
+                  claimName: librenms-data-claim-ypf
