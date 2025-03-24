@@ -23,7 +23,7 @@ spec:
         args: 
           - |
             while true; do
-              python3 /opt/librenms/poller-wrapper.py 16
+              python3 /opt/librenms/poller-wrapper.py 16 --progress
               sleep 300
             done
         env:
@@ -101,7 +101,7 @@ spec:
         args: 
           - |
             while true; do
-              python3 /opt/librenms/poller-wrapper.py 16
+              python3 /opt/librenms/poller-wrapper.py 16 --progress
               sleep 300
             done
         env:
@@ -179,7 +179,7 @@ spec:
         args: 
           - |
             while true; do
-              python3 /opt/librenms/poller-wrapper.py 16
+              python3 /opt/librenms/poller-wrapper.py 16 --progress
               sleep 300
             done
         env:
@@ -257,7 +257,7 @@ spec:
         args: 
           - |
             while true; do
-              python3 /opt/librenms/poller-wrapper.py 16
+              python3 /opt/librenms/poller-wrapper.py 16 --progress
               sleep 300
             done
         env:
