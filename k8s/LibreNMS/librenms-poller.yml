@@ -19,8 +19,13 @@ spec:
       containers:
       - name: poller
         image: librenms/librenms:latest
-        command: ["/usr/bin/supervisord"]
-        args: ["-c", "/etc/supervisor.d/poller.conf"]
+        command: ["/bin/sh", "-c"]
+        args: 
+          - |
+            while true; do
+              python3 /opt/librenms/poller-wrapper.py 16
+              sleep 300
+            done
         env:
         - name: DB_HOST
           value: "librenms-db-master"
