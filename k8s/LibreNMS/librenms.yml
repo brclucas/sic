@@ -27,7 +27,7 @@ spec:
           value: "librenms"
         - name: DB_PASSWORD
           valueFrom:
-            secretRef:
+            secretKeyRef:
               name: librenms-secrets
               key: db_password
         - name: TZ
