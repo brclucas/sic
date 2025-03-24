@@ -47,7 +47,7 @@ spec:
         - name: SESSION_DRIVER
           value: "redis"
         - name: REDIS_HOST
-          value: "redis"
+          value: "librenms-redis-master"  # Cambiado de "redis" al nombre del servicio
         - name: REDIS_PORT
           value: "6379"
         - name: REDIS_DB
@@ -312,6 +312,47 @@ spec:
       - name: librenms-data
         persistentVolumeClaim:
           claimName: librenms-data-claim-ypf
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: librenms-redis-master
+  namespace: librenms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: librenms-redis-master
+  template:
+    metadata:
+      labels:
+        app: librenms-redis-master
+    spec:
+      containers:
+      - name: redis
+        image: redis:6
+        ports:
+        - containerPort: 6379
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: librenms-redis-master
+  namespace: librenms
+spec:
+  ports:
+  - port: 6379
+    targetPort: 6379
+  selector:
+    app: librenms-redis-master
 
 ---
 apiVersion: v1
