@@ -19,6 +19,11 @@ spec:
       containers:
       - name: librenms
         image: librenms/librenms:latest
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            cp /opt/librenms/dist/librenms-scheduler.cron /etc/cron.d/
+            /init
         ports:
         - containerPort: 8000
         env:
@@ -42,20 +47,7 @@ spec:
       - name: librenms-data
         persistentVolumeClaim:
           claimName: librenms-data-claim-master
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: librenms-master
-  namespace: librenms
-spec:
-  type: NodePort
-  ports:
-  - port: 80
-    targetPort: 8000
-    nodePort: 30080
-  selector:
-    app: librenms-master
+
 ---
 # Axion LibreNMS
 apiVersion: apps/v1
@@ -78,6 +70,11 @@ spec:
       containers:
       - name: librenms
         image: librenms/librenms:latest
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            cp /opt/librenms/dist/librenms-scheduler.cron /etc/cron.d/
+            /init
         ports:
         - containerPort: 8000
         env:
@@ -101,20 +98,7 @@ spec:
       - name: librenms-data
         persistentVolumeClaim:
           claimName: librenms-data-claim-axion
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: librenms-axion
-  namespace: librenms
-spec:
-  type: NodePort
-  ports:
-  - port: 80
-    targetPort: 8000
-    nodePort: 30081
-  selector:
-    app: librenms-axion
+
 ---
 # Alamos LibreNMS
 apiVersion: apps/v1
@@ -137,6 +121,11 @@ spec:
       containers:
       - name: librenms
         image: librenms/librenms:latest
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            cp /opt/librenms/dist/librenms-scheduler.cron /etc/cron.d/
+            /init
         ports:
         - containerPort: 8000
         env:
@@ -160,20 +149,7 @@ spec:
       - name: librenms-data
         persistentVolumeClaim:
           claimName: librenms-data-claim-alamos
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: librenms-alamos
-  namespace: librenms
-spec:
-  type: NodePort
-  ports:
-  - port: 80
-    targetPort: 8000
-    nodePort: 30082
-  selector:
-    app: librenms-alamos
+
 ---
 # YPF LibreNMS
 apiVersion: apps/v1
@@ -196,6 +172,11 @@ spec:
       containers:
       - name: librenms
         image: librenms/librenms:latest
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            cp /opt/librenms/dist/librenms-scheduler.cron /etc/cron.d/
+            /init
         ports:
         - containerPort: 8000
         env:
@@ -219,6 +200,53 @@ spec:
       - name: librenms-data
         persistentVolumeClaim:
           claimName: librenms-data-claim-ypf
+
+---
+# Services remain unchanged
+apiVersion: v1
+kind: Service
+metadata:
+  name: librenms-master
+  namespace: librenms
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8000
+    nodePort: 30080
+  selector:
+    app: librenms-master
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: librenms-axion
+  namespace: librenms
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8000
+    nodePort: 30081
+  selector:
+    app: librenms-axion
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: librenms-alamos
+  namespace: librenms
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8000
+    nodePort: 30082
+  selector:
+    app: librenms-alamos
+
 ---
 apiVersion: v1
 kind: Service
