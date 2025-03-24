@@ -46,9 +46,10 @@ metadata:
   name: librenms
   namespace: librenms
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
   - port: 80
     targetPort: 8000
+    nodePort: 30080
   selector:
     app: librenms
