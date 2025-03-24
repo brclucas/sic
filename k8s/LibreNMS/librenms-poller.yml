@@ -19,8 +19,8 @@ spec:
       containers:
       - name: poller
         image: librenms/librenms:latest
-        command: ["/sbin/dispatcher"]
-        args: ["--group=master"]
+        command: ["/usr/bin/python3"]
+        args: ["/opt/librenms/poller-wrapper.py", "16"]
         env:
         - name: DB_HOST
           value: "librenms-db-master"
@@ -35,6 +35,14 @@ spec:
               key: db_password
         - name: TZ
           value: "America/Argentina/Buenos_Aires"
+        - name: DISPATCHER_NODE_ID
+          value: "master"
+        - name: POLLER_ID
+          value: "1"
+        - name: POLLER_THREADS
+          value: "16"
+        - name: POLLER_NAME
+          value: "master"
         volumeMounts:
         - name: librenms-data
           mountPath: /data
@@ -64,8 +72,8 @@ spec:
       containers:
       - name: poller
         image: librenms/librenms:latest
-        command: ["/sbin/dispatcher"]
-        args: ["--group=axion"]
+        command: ["/usr/bin/python3"]
+        args: ["/opt/librenms/poller-wrapper.py", "16"]
         env:
         - name: DB_HOST
           value: "librenms-db-axion"
@@ -80,6 +88,14 @@ spec:
               key: db_password
         - name: TZ
           value: "America/Argentina/Buenos_Aires"
+        - name: DISPATCHER_NODE_ID
+          value: "axion"
+        - name: POLLER_ID
+          value: "2"
+        - name: POLLER_THREADS
+          value: "16"
+        - name: POLLER_NAME
+          value: "axion"
         volumeMounts:
         - name: librenms-data
           mountPath: /data
@@ -109,8 +125,8 @@ spec:
       containers:
       - name: poller
         image: librenms/librenms:latest
-        command: ["/sbin/dispatcher"]
-        args: ["--group=alamos"]
+        command: ["/usr/bin/python3"]
+        args: ["/opt/librenms/poller-wrapper.py", "16"]
         env:
         - name: DB_HOST
           value: "librenms-db-alamos"
@@ -125,6 +141,14 @@ spec:
               key: db_password
         - name: TZ
           value: "America/Argentina/Buenos_Aires"
+        - name: DISPATCHER_NODE_ID
+          value: "alamos"
+        - name: POLLER_ID
+          value: "3"
+        - name: POLLER_THREADS
+          value: "16"
+        - name: POLLER_NAME
+          value: "alamos"
         volumeMounts:
         - name: librenms-data
           mountPath: /data
@@ -154,8 +178,8 @@ spec:
       containers:
       - name: poller
         image: librenms/librenms:latest
-        command: ["/sbin/dispatcher"]
-        args: ["--group=ypf"]
+        command: ["/usr/bin/python3"]
+        args: ["/opt/librenms/poller-wrapper.py", "16"]
         env:
         - name: DB_HOST
           value: "librenms-db-ypf"
@@ -170,6 +194,14 @@ spec:
               key: db_password
         - name: TZ
           value: "America/Argentina/Buenos_Aires"
+        - name: DISPATCHER_NODE_ID
+          value: "ypf"
+        - name: POLLER_ID
+          value: "4"
+        - name: POLLER_THREADS
+          value: "16"
+        - name: POLLER_NAME
+          value: "ypf"
         volumeMounts:
         - name: librenms-data
           mountPath: /data
