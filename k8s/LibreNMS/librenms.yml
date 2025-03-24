@@ -1,0 +1,235 @@
+# Master LibreNMS
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: librenms-master
+  namespace: librenms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: librenms-master
+  template:
+    metadata:
+      labels:
+        app: librenms-master
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: server-docker
+      containers:
+      - name: librenms
+        image: librenms/librenms:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DB_HOST
+          value: "librenms-db-master"
+        - name: DB_NAME
+          value: "librenms"
+        - name: DB_USER
+          value: "librenms"
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: librenms-secrets
+              key: db_password
+        - name: TZ
+          value: "America/Argentina/Buenos_Aires"
+        volumeMounts:
+        - name: librenms-data
+          mountPath: /data
+      volumes:
+      - name: librenms-data
+        persistentVolumeClaim:
+          claimName: librenms-data-claim-master
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: librenms-master
+  namespace: librenms
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8000
+    nodePort: 30080
+  selector:
+    app: librenms-master
+---
+# Axion LibreNMS
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: librenms-axion
+  namespace: librenms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: librenms-axion
+  template:
+    metadata:
+      labels:
+        app: librenms-axion
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: docker-server-axion
+      containers:
+      - name: librenms
+        image: librenms/librenms:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DB_HOST
+          value: "librenms-db-axion"
+        - name: DB_NAME
+          value: "librenms"
+        - name: DB_USER
+          value: "librenms"
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: librenms-secrets
+              key: db_password
+        - name: TZ
+          value: "America/Argentina/Buenos_Aires"
+        volumeMounts:
+        - name: librenms-data
+          mountPath: /data
+      volumes:
+      - name: librenms-data
+        persistentVolumeClaim:
+          claimName: librenms-data-claim-axion
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: librenms-axion
+  namespace: librenms
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8000
+    nodePort: 30081
+  selector:
+    app: librenms-axion
+---
+# Alamos LibreNMS
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: librenms-alamos
+  namespace: librenms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: librenms-alamos
+  template:
+    metadata:
+      labels:
+        app: librenms-alamos
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: docker-server-alamos
+      containers:
+      - name: librenms
+        image: librenms/librenms:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DB_HOST
+          value: "librenms-db-alamos"
+        - name: DB_NAME
+          value: "librenms"
+        - name: DB_USER
+          value: "librenms"
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: librenms-secrets
+              key: db_password
+        - name: TZ
+          value: "America/Argentina/Buenos_Aires"
+        volumeMounts:
+        - name: librenms-data
+          mountPath: /data
+      volumes:
+      - name: librenms-data
+        persistentVolumeClaim:
+          claimName: librenms-data-claim-alamos
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: librenms-alamos
+  namespace: librenms
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8000
+    nodePort: 30082
+  selector:
+    app: librenms-alamos
+---
+# YPF LibreNMS
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: librenms-ypf
+  namespace: librenms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: librenms-ypf
+  template:
+    metadata:
+      labels:
+        app: librenms-ypf
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: docker-server-ypf
+      containers:
+      - name: librenms
+        image: librenms/librenms:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DB_HOST
+          value: "librenms-db-ypf"
+        - name: DB_NAME
+          value: "librenms"
+        - name: DB_USER
+          value: "librenms"
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: librenms-secrets
+              key: db_password
+        - name: TZ
+          value: "America/Argentina/Buenos_Aires"
+        volumeMounts:
+        - name: librenms-data
+          mountPath: /data
+      volumes:
+      - name: librenms-data
+        persistentVolumeClaim:
+          claimName: librenms-data-claim-ypf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: librenms-ypf
+  namespace: librenms
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8000
+    nodePort: 30083
+  selector:
+    app: librenms-ypf

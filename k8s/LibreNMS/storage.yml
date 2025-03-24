@@ -1,0 +1,135 @@
+# Master Storage
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: librenms-data-master
+  namespace: librenms
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+    - ReadWriteOnce
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - server-docker
+  hostPath:
+    path: /data/librenms/master
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: librenms-data-claim-master
+  namespace: librenms
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Gi
+---
+# Axion Storage
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: librenms-data-axion
+  namespace: librenms
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+    - ReadWriteOnce
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - docker-server-axion
+  hostPath:
+    path: /data/librenms/axion
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: librenms-data-claim-axion
+  namespace: librenms
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Gi
+---
+# Alamos Storage
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: librenms-data-alamos
+  namespace: librenms
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+    - ReadWriteOnce
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - docker-server-alamos
+  hostPath:
+    path: /data/librenms/alamos
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: librenms-data-claim-alamos
+  namespace: librenms
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Gi
+---
+# YPF Storage
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: librenms-data-ypf
+  namespace: librenms
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+    - ReadWriteOnce
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - docker-server-ypf
+  hostPath:
+    path: /data/librenms/ypf
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: librenms-data-claim-ypf
+  namespace: librenms
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Gi
