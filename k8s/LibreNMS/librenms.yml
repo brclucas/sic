@@ -4,7 +4,7 @@ metadata:
   name: librenms
   namespace: librenms
 spec:
-  replicas: 1
+  replicas: 4  # One for each worker node
   selector:
     matchLabels:
       app: librenms
@@ -13,6 +13,16 @@ spec:
       labels:
         app: librenms
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - librenms
+            topologyKey: "kubernetes.io/hostname"
       containers:
       - name: librenms
         image: librenms/librenms:latest
