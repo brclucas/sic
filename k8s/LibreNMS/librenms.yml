@@ -23,6 +23,8 @@ spec:
         args:
           - |
             cp /opt/librenms/dist/librenms-scheduler.cron /etc/cron.d/
+            chmod 0644 /etc/cron.d/librenms-scheduler.cron
+            service cron start
             /init
         ports:
         - containerPort: 8000
@@ -40,6 +42,32 @@ spec:
               key: db_password
         - name: TZ
           value: "America/Argentina/Buenos_Aires"
+        - name: CACHE_DRIVER
+          value: "redis"
+        - name: SESSION_DRIVER
+          value: "redis"
+        - name: REDIS_HOST
+          value: "redis"
+        - name: REDIS_PORT
+          value: "6379"
+        - name: REDIS_DB
+          value: "0"
+        - name: LIBRENMS_BASE
+          value: "/opt/librenms"
+        - name: APP_URL
+          value: "http://librenms"
+        - name: APP_KEY
+          valueFrom:
+            secretKeyRef:
+              name: librenms-secrets
+              key: app_key
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
         volumeMounts:
         - name: librenms-data
           mountPath: /data
@@ -74,6 +102,8 @@ spec:
         args:
           - |
             cp /opt/librenms/dist/librenms-scheduler.cron /etc/cron.d/
+            chmod 0644 /etc/cron.d/librenms-scheduler.cron
+            service cron start
             /init
         ports:
         - containerPort: 8000
@@ -91,6 +121,32 @@ spec:
               key: db_password
         - name: TZ
           value: "America/Argentina/Buenos_Aires"
+        - name: CACHE_DRIVER
+          value: "redis"
+        - name: SESSION_DRIVER
+          value: "redis"
+        - name: REDIS_HOST
+          value: "redis"
+        - name: REDIS_PORT
+          value: "6379"
+        - name: REDIS_DB
+          value: "0"
+        - name: LIBRENMS_BASE
+          value: "/opt/librenms"
+        - name: APP_URL
+          value: "http://librenms"
+        - name: APP_KEY
+          valueFrom:
+            secretKeyRef:
+              name: librenms-secrets
+              key: app_key
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
         volumeMounts:
         - name: librenms-data
           mountPath: /data
@@ -125,6 +181,8 @@ spec:
         args:
           - |
             cp /opt/librenms/dist/librenms-scheduler.cron /etc/cron.d/
+            chmod 0644 /etc/cron.d/librenms-scheduler.cron
+            service cron start
             /init
         ports:
         - containerPort: 8000
@@ -142,6 +200,32 @@ spec:
               key: db_password
         - name: TZ
           value: "America/Argentina/Buenos_Aires"
+        - name: CACHE_DRIVER
+          value: "redis"
+        - name: SESSION_DRIVER
+          value: "redis"
+        - name: REDIS_HOST
+          value: "redis"
+        - name: REDIS_PORT
+          value: "6379"
+        - name: REDIS_DB
+          value: "0"
+        - name: LIBRENMS_BASE
+          value: "/opt/librenms"
+        - name: APP_URL
+          value: "http://librenms"
+        - name: APP_KEY
+          valueFrom:
+            secretKeyRef:
+              name: librenms-secrets
+              key: app_key
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
         volumeMounts:
         - name: librenms-data
           mountPath: /data
@@ -176,6 +260,8 @@ spec:
         args:
           - |
             cp /opt/librenms/dist/librenms-scheduler.cron /etc/cron.d/
+            chmod 0644 /etc/cron.d/librenms-scheduler.cron
+            service cron start
             /init
         ports:
         - containerPort: 8000
@@ -193,6 +279,32 @@ spec:
               key: db_password
         - name: TZ
           value: "America/Argentina/Buenos_Aires"
+        - name: CACHE_DRIVER
+          value: "redis"
+        - name: SESSION_DRIVER
+          value: "redis"
+        - name: REDIS_HOST
+          value: "redis"
+        - name: REDIS_PORT
+          value: "6379"
+        - name: REDIS_DB
+          value: "0"
+        - name: LIBRENMS_BASE
+          value: "/opt/librenms"
+        - name: APP_URL
+          value: "http://librenms"
+        - name: APP_KEY
+          valueFrom:
+            secretKeyRef:
+              name: librenms-secrets
+              key: app_key
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
         volumeMounts:
         - name: librenms-data
           mountPath: /data
@@ -202,7 +314,6 @@ spec:
           claimName: librenms-data-claim-ypf
 
 ---
-# Services remain unchanged
 apiVersion: v1
 kind: Service
 metadata:
