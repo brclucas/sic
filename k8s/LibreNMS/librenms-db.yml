@@ -23,12 +23,12 @@ spec:
           value: "librenms"
         - name: MYSQL_PASSWORD
           valueFrom:
-            secretRef:
+            secretKeyRef:
               name: librenms-secrets
               key: db_password
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
-            secretRef:
+            secretKeyRef:
               name: librenms-secrets
               key: db_root_password
         ports:
