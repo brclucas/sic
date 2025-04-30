@@ -11,15 +11,15 @@ spec:
       port: 53
       targetPort: 53
       protocol: TCP
-      nodePort: 3053  # El puerto en los nodos
+      nodePort: 30053  # El puerto en los nodos
     - name: dns
       port: 53
       targetPort: 53
       protocol: UDP
-      nodePort: 3053  # El puerto en los nodos
+      nodePort: 30053  # El puerto en los nodos
     - name: web
       port: 8888
       targetPort: 8888
       protocol: TCP
-      nodePort: 3088  # El puerto web accesible en los nodos
+      nodePort: 30088  # El puerto web accesible en los nodos
   type: NodePort  # Permite acceso externo al puerto
