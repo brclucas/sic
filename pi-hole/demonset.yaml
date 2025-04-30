@@ -42,9 +42,9 @@ spec:
       volumes:
         - name: pihole-config
           hostPath:
-            path: pihole/config
+            path: pi-hole/config
             type: DirectoryOrCreate
         - name: dnsmasq-config
           hostPath:
-            path: pihole/dnsmasq
+            path: pi-hole/dnsmasq
             type: DirectoryOrCreate
