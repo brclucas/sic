@@ -3,3 +3,5 @@
 .ansible
 .vscode/
 *.log
+vars.yml
+asd.yml

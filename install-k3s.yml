@@ -19,7 +19,7 @@
       register: node_token
 
 - name: Install K3s Workers
-  hosts: server[2:4]
+  hosts: server4
   become: yes
   tasks:
     - name: Download K3s install script

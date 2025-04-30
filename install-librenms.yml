@@ -1,0 +1,101 @@
+- name: Install LibreNMS
+  hosts: all
+  gather_facts: no
+  vars_files:
+    - .env
+  vars:
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+
+  tasks:
+    - name: Create Directory
+      file:
+        path: /home/soporte/librenms
+        state: directory
+        mode: '0755'
+
+    - name: Download LibreNMS
+      get_url:
+        url: https://github.com/librenms/docker/archive/refs/heads/master.zip
+        dest: /home/soporte/librenms/
+    - name: Install unzip
+      apt:
+        name: unzip
+        state: present
+        update_cache: yes
+      become: yes
+
+    - name: Unzip LibreNMS
+      unarchive:
+        src: /home/soporte/librenms/master.zip
+        dest: /home/soporte/librenms/
+        remote_src: yes
+
+    - name: Copy Docker Compose
+      copy:
+        src: /home/soporte/librenms/docker-master/compose
+        dest: /home/soporte/librenms/compose
+        remote_src: yes
+
+    - name: Create New Script Cronscript.sh
+      copy:
+        dest: /home/soporte/librenms/compose/cronscript.sh
+        content: |
+          #!/bin/sh
+          # Import cronjob
+          crontab -u librenms /opt/librenms/cronscript.sh
+        mode: '0755'
+
+    - name: Create New Script librenmsdockercron.sh
+      copy:
+        dest: /home/soporte/librenms/compose/librenmsdockercron.sh
+        content: |
+          15 0 * * * cd /opt/librenms/ && bash daily.sh
+          */5 * * * * php -f /opt/librenms/html/plugins/Weathermap/map-poller.php
+          33   */6  * * *   librenms    /opt/librenms/cronic /opt/librenms/discovery-wrapper.py 1
+          */5  *    * * *   librenms    /opt/librenms/discovery.php -h new >> /dev/null 2>&1
+          */5  *    * * *   librenms    /opt/librenms/cronic /opt/librenms/poller-wrapper.py 16
+          *    *    * * *   librenms    /opt/librenms/alerts.php >> /dev/null 2>&1
+          */5  *    * * *   librenms    /opt/librenms/poll-billing.php >> /dev/null 2>&1
+          01   *    * * *   librenms    /opt/librenms/billing-calculate.php >> /dev/null 2>&1
+          */5  *    * * *   librenms    /opt/librenms/check-services.php >> /dev/null 2>&1
+          * * * * * php /opt/librenms/artisan schedule:run >> /dev/null 2>&1
+        mode: '0755'
+
+    - name: Remove Old Directory
+      file:
+        path: /home/soporte/librenms/docker-master
+        state: absent
+
+    - name: Modify Environment User
+      lineinfile:
+        path: /home/soporte/librenms/compose/.env
+        regexp: '^MYSQL_USER='
+        line: 'MYSQL_USER={{ LIBRENMS_MYSQL_USER  }}'
+
+    - name: Modify Environment User
+      lineinfile:
+        path: /home/soporte/librenms/compose/.env
+        regexp: '^MYSQL_USER='
+        line: 'MYSQL_USER={{ LIBRENMS_MYSQL_USER  }}'
+
+    - name: Modify Environment TZ
+      lineinfile:
+        path: /home/soporte/librenms/compose/.env
+        regexp: '^TZ='
+        line: 'TZ={{ LIBRENMS_TZ  }}'
+
+    - name: Add Cron Volume to LibreNMS
+      blockinfile:
+        path: /home/soporte/librenms/compose/compose.yml
+        marker: "    volumes:"
+        block: |
+          volumes:
+            - "./librenms:/data"
+            - "./librenmsdockercron.sh:/opt/librenms/cronscript.sh"
+            - "./import-cron.sh:/etc/cont-init.d/09-import-cron.sh"
+        insertafter: "    volumes:"
+
+    - name: Run Docker Compose
+      shell: docker-compose up -d
+      args:
+        chdir: /home/soporte/librenms/compose
