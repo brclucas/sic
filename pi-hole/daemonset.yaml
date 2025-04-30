@@ -12,8 +12,6 @@ spec:
       labels:
         app: pihole
     spec:
-      hostNetwork: true
-      dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: pihole
           image: pihole/pihole:latest
@@ -30,15 +28,12 @@ spec:
           ports:
             - containerPort: 53
               protocol: UDP
+              hostPort: 53  # Mapea el puerto 53 en el host
             - containerPort: 53
               protocol: TCP
+              hostPort: 53  # Mapea el puerto 53 en el host
             - containerPort: 8888
               protocol: TCP
-          volumeMounts:
-            - name: pihole-config
-              mountPath: /etc/pihole
-            - name: dnsmasq-config
-              mountPath: /etc/dnsmasq.d
       volumes:
         - name: pihole-config
           hostPath:
