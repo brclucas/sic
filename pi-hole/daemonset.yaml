@@ -26,13 +26,13 @@ spec:
                   name: pihole-secret
                   key: password
             - name: PIHOLE_WEB_PORT
-              value: "8080"
+              value: "8888"
           ports:
             - containerPort: 53
               protocol: UDP
             - containerPort: 53
               protocol: TCP
-            - containerPort: 8080
+            - containerPort: 8888
               protocol: TCP
           volumeMounts:
             - name: pihole-config
